@@ -7,13 +7,17 @@ public class Egg {
 	private static Random r = new Random();
 	int row;
 	int col;
+	public static int num = 0;
 	public Egg(int row, int col) {
 		this.row = row;
 		this.col = col;
+		
 	}
 	public Egg(){
 		
 		this(r.nextInt(Yard.ROWS-3)+2,r.nextInt(Yard.COLS-2)+1);
+		
+		
 	}
 	public Rectangle getRectangle(){
 		return new Rectangle(this.col*Yard.BLOCKS,this.row*Yard.BLOCKS,Yard.BLOCKS,Yard.BLOCKS);
@@ -29,8 +33,9 @@ public class Egg {
 	public void reAppear() {
 		this.row = r.nextInt(Yard.ROWS-3)+2;
 		this.col = r.nextInt(Yard.COLS-2)+1;
+		num++;
+		System.out.println("num=="+num);
 	}
-	
-	
+
 
 }

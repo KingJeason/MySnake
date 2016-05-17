@@ -6,11 +6,14 @@ public class Snake {
 	Node head = null;
 	Node tail = null;
 	int size = 1;
+	int score = 0;
+	Yard y = null;
 	private Node  n = new Node(15,15,Dir.L);
-	Snake(){
+	Snake(Yard y){
 		head = n;
 		tail = n;
-		size = 1;		
+		size = 1;
+		this.y = y;
 	}
 	public void addTotail(){
 		Node node = null;//这样先定义就可以不必担心重复定义变量名字了
@@ -67,19 +70,32 @@ public class Snake {
 		size++;
 	}
 	public void draw(Graphics g){
+		Color c = g.getColor();
+		g.setColor(Color.black);
+		g.drawString("score:"+score, 20, 40);
 		if(size <= 0) return;
 		move();
 		for(Node n = head; n != null; n = n.next) {
 			n.draw(g);
 		}
+		g.setColor(c);
 	} 	
 	
 	private void move() {
 		addTohead();
 		deletefromtail();
+		checkDead();
 		
 	}
 
+	private void checkDead() {
+		for(Node n = head.next; n != null; n = n.next) {
+			if(getRectangle(head).intersects(getRectangle(n))) {
+				y.stop(y.gogogo);
+			}
+		}
+		
+	}
 	private void deletefromtail() {
 		if(size ==0)return;
 		tail = tail.prev;
@@ -108,33 +124,50 @@ public class Snake {
 		}
 	}
 	public void eat(Egg e){
-		if(this.getRectangle().intersects(e.getRectangle())){
-			System.out.println("重合了");
-			System.out.println("row :=="+e.row+"col :== "+e.col);
+		if(this.getRectangle(head).intersects(e.getRectangle())){
+			/*System.out.println("重合了");
+			System.out.println("row :=="+e.row+"col :== "+e.col);*/
 			e.reAppear();
 			this.addTohead();
+			this.score += 5;
 			
 		}
 	}
-	public Rectangle getRectangle(){
-		return  new Rectangle(head.col*Yard.BLOCKS,head.row*Yard.BLOCKS,Yard.BLOCKS,Yard.BLOCKS);
+	public void eat(BigEgg e, Egg x,Graphics g){
+		e.reAppear(x,g);
+		if(this.getRectangle(head).intersects(e.getRectangle())){
+			e.col = 0;
+			e.row = 0;
+			this.addTohead();
+			this.score += 20;
+		}
+			
+	}
+	public Rectangle getRectangle(Node node){
+		return  new Rectangle(node.col*Yard.BLOCKS,node.row*Yard.BLOCKS,Yard.BLOCKS,Yard.BLOCKS);
 	}
 
 	public void keypressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch(key){
 		case KeyEvent.VK_LEFT:
+			if(head.dir != Dir.R)
 			 this.head.dir = Dir.L;	
 			 break;
 		case KeyEvent.VK_RIGHT:
+			if(head.dir != Dir.L)
 			 this.head.dir = Dir.R;	
 			 break;
 		case KeyEvent.VK_UP:
+			if(head.dir != Dir.D)
 			 this.head.dir = Dir.U;	
 			 break;
 		case KeyEvent.VK_DOWN:
+			if(head.dir != Dir.U)
 			 this.head.dir = Dir.D;	
 			 break;
+		case KeyEvent.VK_F2:
+			y.gogogo.reStart();
 		}
 	}
 	
