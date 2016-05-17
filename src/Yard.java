@@ -80,10 +80,10 @@ public class Yard extends Frame {
 		s.draw(g);
 		e.draw(g);
 		//b.draw(g);
-		/*if(e.num % 5 == 0 && e.num != 0){
+		if(e.num % 5 == 0 && e.num != 0){
 			
 			b.draw(g);
-		}*/
+		}
 			
 		g.setColor(c);
 	

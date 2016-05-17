@@ -134,10 +134,8 @@ public class Snake {
 		}
 	}
 	public void eat(BigEgg e, Egg x,Graphics g){
-		e.reAppear(x,g);
 		if(this.getRectangle(head).intersects(e.getRectangle())){
-			e.col = 0;
-			e.row = 0;
+			e.reAppear(x, g);
 			this.addTohead();
 			this.score += 20;
 		}

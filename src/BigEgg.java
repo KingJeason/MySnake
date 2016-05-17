@@ -15,7 +15,7 @@ public class BigEgg {
 	}
 	public BigEgg(){
 		
-		this(0,0);
+		this( r.nextInt(Yard.ROWS-3)+2,r.nextInt(Yard.COLS-2)+1);
 	}
 	public Rectangle getRectangle(){
 		return new Rectangle(this.col*Yard.BLOCKS,this.row*Yard.BLOCKS,Yard.BLOCKS,Yard.BLOCKS);
@@ -35,26 +35,19 @@ public class BigEgg {
 		
 	}
 	public void reAppear(Egg e,Graphics g) {
-		if(e.num % 5==0 && e.num !=0)
-		{
-			this.row = r.nextInt(Yard.ROWS-3)+2;
-			this.col = r.nextInt(Yard.COLS-2)+1;
-			this.draw(g);
-		}
-		else{
-		this.row = 0;
-		this.col = 0;
-		}
+	
+		this.row = r.nextInt(Yard.ROWS-3)+2;
+		this.col = r.nextInt(Yard.COLS-2)+1;
 		/*System.out.println("row=="+row);
 		System.out.println("col=="+col);*/
 	
 	}
-	public void disAppera(){
+	/*public void disAppera(){
 		
 		this.row = 0;
 		this.col = 0;
 	}
-	
+	*/
 	
 
 }
